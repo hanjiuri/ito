@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+  <display-name>webapp</display-name>
+  <!-- *****context-param配置***** -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:application-context.xml</param-value>
+  </context-param>
+
+  <!-- *****listener配置***** -->
+  <!-- spring监听器 -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- 防止spring内存溢出监听器 -->
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+
+  <!-- spring编码过滤器 -->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- *****servlet配置***** -->
+  <!-- spring mvc servlet-->
+  <servlet>
+    <servlet-name>SpringMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpringMVC</servlet-name>
+    <!-- 此处也可以配置成 *.do 形式 -->
+    <!--
+        *.action  拦截以.aciton结尾的
+        / 所有都拦截 (不包括.jsp)
+        /* 所有都拦截( 包括 .png, .jpg, .jsp, .js, .css等所有)
+    -->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!--访问静态文件,激活Tomcat的defaultServlet来处理静态文件,以免在请求静态资源时， spring拦截静态资源请求，出现404 -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.png</url-pattern>
+  </servlet-mapping>
+
+  <!-- 配置session超时时间，单位分钟 -->
+  <session-config>
+    <session-timeout>600</session-timeout>
+  </session-config>
+
+  <!-- 	<error-page>
+          <error-code>404</error-code>
+          <location>/404.jsp</location>
+      </error-page>
+      <error-page>
+          <error-code>500</error-code>
+          <location>/500.jsp</location>
+      </error-page>
+      <error-page>
+          <exception-type>java.lang.Throwable</exception-type>
+          <location>/500.jsp</location>
+      </error-page>
+   -->
+  <welcome-file-list>
+    <welcome-file>/index.jsp</welcome-file>
+  </welcome-file-list>
+
+</web-app>
