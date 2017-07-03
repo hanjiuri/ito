@@ -1,8 +1,3 @@
-/ito-apply/.idea
-/ito-apply/*.iml
-/ito-apply/ito-apply-common/*.iml
-/ito-apply/ito-apply-dao/*.iml
-/ito-apply/ito-apply-domain/*.iml
-/ito-apply/ito-apply-services-Impl/*.iml
-/ito-apply/ito-apply-services-Interface/*.iml
-/ito-apply/ito-apply-web/*.iml
+.idea
+*.iml
+target
